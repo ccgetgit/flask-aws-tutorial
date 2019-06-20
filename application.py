@@ -13,10 +13,21 @@ from application.models import Data
 from application.forms import EnterDBInfo, RetrieveDBInfo
 
 # Elastic Beanstalk initalization
-application = Flask(__name__)
-application.debug=True
+#application = Flask(__name__)
+#application.debug=True
 # change this to your own value
-application.secret_key = 'cC1YCIWOj9GgWspgNEo2'   
+#application.secret_key = 'cC1YCIWOj9GgWspgNEo2'   
+application = Flask(__name__)
+application.config.from_pyfile('./config.py')
+db.init_app(application)
+
+def create():
+    with app.app_context():
+       #Below Tags is model class 
+       tag = Tags(**data)
+       db.session.add(tag)
+       db.session.commit()
+       return from_sql(tag)
 
 @application.route('/', methods=['GET', 'POST'])
 @application.route('/index', methods=['GET', 'POST'])
